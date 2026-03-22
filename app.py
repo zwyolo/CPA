@@ -7,6 +7,6 @@ app = FastAPI()
 def health():
     return {"status": "running"}
 
-# 版本 1：先试这个
-mcp_app = mcp.streamable_http_app()
+# 版本 2：试这个
+mcp_app = mcp.http_app()
 app.mount("/mcp", mcp_app)
