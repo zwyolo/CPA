@@ -1,14 +1,17 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from mcp_server import mcp
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with mcp.session_manager.run():
+        yield
+
+app = FastAPI(lifespan=lifespan)
 
 @app.get("/")
 def health():
     return {"status": "running"}
-
-mcp_app = mcp.streamable_http_app()
-app.mount("/mcp", mcp_app)
 
 @app.get("/routes")
 def routes():
@@ -20,3 +23,5 @@ def routes():
         }
         for route in app.routes
     ]
+
+app.mount("/mcp", mcp.streamable_http_app())
