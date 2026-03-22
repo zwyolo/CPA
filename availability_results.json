@@ -1,0 +1,94 @@
+{
+  "search_params": {
+    "exam_section": "Auditing and Attestation",
+    "location": "Alpharetta, GA",
+    "start_date": "2026-03-30",
+    "end_date": "2026-03-31"
+  },
+  "scraped_at": "2026-03-22T01:38:29.865064",
+  "centers": [
+    {
+      "center": "GA, Smyrna - 0024 : Atlanta - Smyrna, 2400 Lake Park Drive, SE USA",
+      "distance": "16.44 Miles",
+      "available_dates": [
+        {
+          "date": "March 31, 2026",
+          "times": [
+            "8:00 AM"
+          ]
+        }
+      ]
+    },
+    {
+      "center": "GA, SMYRNA - 0026 : Atlanta - Smyrna, 2400 Lake Park Drive, SE USA",
+      "distance": "16.44 Miles",
+      "available_dates": [
+        {
+          "date": "March 31, 2026",
+          "times": [
+            "8:30 AM"
+          ]
+        }
+      ]
+    },
+    {
+      "center": "GA, Dahlonega - 3001 : University of North Georgia, 203B Stewart Student Success Center USA",
+      "distance": "36.03 Miles",
+      "available_dates": [
+        {
+          "date": "March 31, 2026",
+          "times": [
+            "8:00 AM",
+            "12:30 PM"
+          ]
+        }
+      ]
+    },
+    {
+      "center": "GA, Athens - 5809 : Athens - University of Georgia, 825 S. Lumpkin St. USA",
+      "distance": "53.32 Miles",
+      "available_dates": [
+        {
+          "date": "March 30, 2026",
+          "times": [
+            "8:00 AM",
+            "12:30 PM"
+          ]
+        },
+        {
+          "date": "March 31, 2026",
+          "times": [
+            "8:30 AM",
+            "1:00 PM"
+          ]
+        }
+      ]
+    },
+    {
+      "center": "GA, Athens - 5803 : Athens - University of Georgia, 825 S. Lumpkin St. USA",
+      "distance": "53.32 Miles",
+      "available_dates": [
+        {
+          "date": "March 31, 2026",
+          "times": [
+            "2:30 PM",
+            "3:00 PM"
+          ]
+        }
+      ]
+    },
+    {
+      "center": "TN, CHATTANOOGA - 1010 : Chattanooga - Hamilton Park Dr., 7610 Hamilton Park Drive USA",
+      "distance": "83.10 Miles",
+      "available_dates": [
+        {
+          "date": "March 31, 2026",
+          "times": [
+            "9:00 AM",
+            "1:30 PM"
+          ]
+        }
+      ]
+    }
+  ]
+}
