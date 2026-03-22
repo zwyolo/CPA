@@ -9,12 +9,13 @@ Tools:
 import json
 import subprocess
 from pathlib import Path
+import sys
 
 from mcp.server.fastmcp import FastMCP
 
 BASE_DIR = Path(__file__).parent
 RESULTS_FILE = BASE_DIR / "availability_results.json"
-VENV_PYTHON = BASE_DIR / "venv" / "bin" / "python3"
+PYTHON_BIN = sys.executable
 SEARCH_SCRIPT = BASE_DIR / "search.py"
 
 mcp = FastMCP("cpa-availability")
@@ -41,7 +42,7 @@ def run_cpa_search(
         end_date:     YYYY-MM-DD
     """
     cmd = [
-        str(VENV_PYTHON),
+        str(PYTHON_BIN),
         str(SEARCH_SCRIPT),
         "--exam",
         exam_section,
