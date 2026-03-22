@@ -9,4 +9,4 @@ def health():
     return {"status": "running"}
 
 
-app.mount("/mcp", mcp.streamable_http_app())
+app.mount("/CPA/mcp", mcp.streamable_http_app())
