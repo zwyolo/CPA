@@ -12,13 +12,29 @@ from pathlib import Path
 import sys
 
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 
 BASE_DIR = Path(__file__).parent
 RESULTS_FILE = BASE_DIR / "availability_results.json"
 PYTHON_BIN = sys.executable
 SEARCH_SCRIPT = BASE_DIR / "search.py"
 
-mcp = FastMCP("cpa-availability")
+mcp = FastMCP(
+    "cpa-availability",
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=True,
+        allowed_hosts=[
+            "cpa-neof.onrender.com",
+            "localhost",
+            "127.0.0.1",
+        ],
+        allowed_origins=[
+            "https://cpa-neof.onrender.com",
+            "http://localhost",
+            "http://127.0.0.1",
+        ],
+    ),
+)
 
 
 @mcp.tool()

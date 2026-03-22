@@ -29,13 +29,4 @@ def routes():
     ]
 
 
-app.mount(
-    "/mcp",
-    mcp.streamable_http_app(
-        allowed_hosts=[
-            "cpa-neof.onrender.com",
-            "localhost",
-            "127.0.0.1",
-        ]
-    ),
-)
+app.mount("/mcp", mcp.streamable_http_app())
