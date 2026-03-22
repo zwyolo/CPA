@@ -24,12 +24,12 @@ mcp = FastMCP(
     transport_security=TransportSecuritySettings(
         enable_dns_rebinding_protection=True,
         allowed_hosts=[
-            "cpa-neof.onrender.com",
+            "cpa-bgx6.onrender.com",
             "localhost",
             "127.0.0.1",
         ],
         allowed_origins=[
-            "https://cpa-neof.onrender.com",
+            "https://cpa-bgx6.onrender.com",
             "http://localhost",
             "http://127.0.0.1",
         ],
