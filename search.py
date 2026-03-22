@@ -21,7 +21,6 @@ from selenium.webdriver.support.ui import Select, WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 
 import captcha as captcha_mod
 
@@ -47,12 +46,26 @@ def js_click(driver, element):
 
 def make_driver(headless: bool = True) -> webdriver.Chrome:
     opts = Options()
+
+    # 👇 指定 Docker 里的 Chromium
+    opts.binary_location = "/usr/bin/chromium"
+
     if headless:
         opts.add_argument("--headless=new")
+
     opts.add_argument("--window-size=1280,900")
+
+    # 👇 Docker 必备（非常重要）
+    opts.add_argument("--no-sandbox")
+    opts.add_argument("--disable-dev-shm-usage")
+
+    # 可选优化
     opts.add_argument("--disable-blink-features=AutomationControlled")
     opts.add_experimental_option("excludeSwitches", ["enable-automation"])
-    service = Service(ChromeDriverManager().install())
+
+    # 👇 用系统自带 chromedriver
+    service = Service("/usr/bin/chromedriver")
+
     return webdriver.Chrome(service=service, options=opts)
 
 
