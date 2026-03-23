@@ -28,8 +28,11 @@ def _fmt_date(date_str: str) -> str:
 def _get_time_slots(page) -> list[str]:
     """
     Tries to capture time slots after clicking a date.
-    Uses a short retry loop to account for AJAX loading.
+    Prioritizes absolute accuracy by being "slow and steady".
     """
+    # 1. Increased mandatory wait to ensure the site clears the previous results
+    page.wait_for_timeout(1500) 
+    
     candidates = [
         "div.time-card", "div.time-slot", "button.time-slot", "li.time-slot",
         "div[class*='timecard']", "div[class*='time-card']", "div[class*='timeslot']",
@@ -37,33 +40,42 @@ def _get_time_slots(page) -> list[str]:
     ]
     time_pattern = re.compile(r'\d{1,2}:\d{2}\s*[AP]M', re.IGNORECASE)
 
-    # Retry loop: check every 200ms for up to 3 seconds
-    for _ in range(15):
+    # 2. Longer retry loop with more spacing
+    for _ in range(10):
+        # Look for specific time elements
         for sel in candidates:
             els = page.query_selector_all(sel)
             texts = [e.inner_text().strip() for e in els if e.inner_text().strip()]
             times = [t for t in texts if time_pattern.search(t)]
             if times:
+                # Extra grace period to ensure all slots are populated
+                page.wait_for_timeout(500)
                 return times
 
-        # Check main container as fallback
+        # Check for "Loading" text or spinner to avoid premature scraping
+        body_text = page.inner_text("body")
+        if "Loading" in body_text or "Please wait" in body_text:
+            page.wait_for_timeout(1000)
+            continue
+
+        # Fallback to container text
         try:
             container = page.locator("div.card.card-default.marginBottom").first
             if container.is_visible():
-                body_text = container.inner_text()
-                times = time_pattern.findall(body_text)
+                times = time_pattern.findall(container.inner_text())
                 if times:
+                    page.wait_for_timeout(500)
                     return times
         except:
             pass
 
-        page.wait_for_timeout(200)
+        page.wait_for_timeout(500)
 
     return []
 
 def _scrape_results(page) -> list:
     results = []
-    page.wait_for_selector("div.card.card-default.marginBottom", timeout=10000)
+    page.wait_for_selector("div.card.card-default.marginBottom", timeout=15000)
     cards = page.query_selector_all("div.card.card-default.marginBottom")
 
     for card in cards:
@@ -97,9 +109,13 @@ def _scrape_results(page) -> list:
 
                 try:
                     dc.scroll_into_view_if_needed()
+                    # Wait for scrolling to settle
+                    page.wait_for_timeout(400)
+                    # Natural click (no force) allows Playwright to wait for actionability
                     dc.click()
                     times = _get_time_slots(page)
-                except:
+                except Exception as e:
+                    log(f"  Error clicking date {date_str}: {e}")
                     times = []
 
                 dates_with_times.append({"date": date_str, "times": times})
