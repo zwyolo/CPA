@@ -3,3 +3,5 @@
 /.mcp.json
 /__pycache__
 /venv
+/.gemini
+availability_results.json

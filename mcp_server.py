@@ -16,26 +16,11 @@ from mcp.server.transport_security import TransportSecuritySettings
 
 BASE_DIR = Path(__file__).parent
 RESULTS_FILE = BASE_DIR / "availability_results.json"
-PYTHON_BIN = sys.executable
+VENV_PYTHON = BASE_DIR / "venv" / "bin" / "python3"
+PYTHON_BIN = str(VENV_PYTHON) if VENV_PYTHON.exists() else sys.executable
 SEARCH_SCRIPT = BASE_DIR / "search.py"
 
-mcp = FastMCP(
-    "cpa-availability",
-    transport_security=TransportSecuritySettings(
-        enable_dns_rebinding_protection=True,
-        allowed_hosts=[
-            "cpa-bgx6.onrender.com",
-            "localhost",
-            "127.0.0.1",
-        ],
-        allowed_origins=[
-            "https://cpa-bgx6.onrender.com",
-            "http://localhost",
-            "http://127.0.0.1",
-        ],
-    ),
-)
-
+mcp = FastMCP("cpa-availability")
 
 @mcp.tool()
 def run_cpa_search(
@@ -116,3 +101,7 @@ def get_cpa_availability() -> str:
             lines.append("")
 
     return "\n".join(lines)
+
+
+if __name__ == "__main__":
+    mcp.run()

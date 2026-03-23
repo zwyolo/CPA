@@ -6,6 +6,7 @@ echo "=== CPA Exam Availability Checker Setup ==="
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+playwright install chromium chrome
 
 echo ""
 echo "Setup complete! To run:"
